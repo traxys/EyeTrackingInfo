@@ -18,19 +18,21 @@ def saveToGreyscale(img): #Convertir une image en niveaux de gris et l'enregistr
 
 f,axArr = plt.subplots(1,2) #Creer une zone pour afficher deux images
 
-
 img = mpimg.imread("scrn1.png") #Charger l'image
-axArr[0].imshow(img[:]) #Afficher l'image a l'ecran
+axArr[0].imshow(img[::15,::15]) #Afficher l'image a l'ecran
 
 startTime = time.clock()
 
-blueZone = img[:, :, 2] < 0.8 #Creer un filtre ou seul le tres bleu est gardé
-img[blueZone] = [0, 0, 0, 1]
+img = img[::15,::15] #Downsampling by a 'n' factor
 
-spot = np.where(img[:,:,2] != 0) #Trouver le centre de la zone bleu
-print( np.mean(spot[0]), np.mean(spot[1]))
+img[img[:, :, 2] < 0.8] = [0, 0, 0, 1] #Filtre bleu
+rZone = img[:,:,0] > 0.5 #Filtre toute les couleurs trop importantes
 
-print(time.clock()-startTime) #Mesurer le temps que cela a pris
+
+#spot = np.where(img[:,:,2] != 0) #Trouver le centre de la zone bleu
+#print( np.mean(spot[0]), np.mean(spot[1]))
+
+print("Time to filter blue",time.clock()-startTime) #Mesurer le temps que cela a pris
 
 axArr[1].imshow(img) #Afficher l'image avec le point bleu
 plt.show() #Afficher le tout a l'ecran
