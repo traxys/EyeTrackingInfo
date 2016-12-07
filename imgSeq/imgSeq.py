@@ -3,6 +3,22 @@ import numpy as np
 from PIL import Image, ImageTk
 import time
 	
+def printNextImage(i):
+	k = i +1
+	cIStr = ""
+	if k < 10:
+		cIStr = "00"+str(k)
+	elif k < 100:
+		cIStr = "0"+str(k)
+	else:
+		cIStr = str(k)
+	
+	img = plt.imread("image-"+cIStr+".png")
+	
+	plt.clf()
+	plt.imshow(img)
+	fig.canvas.draw()	
+	
 def playAnimation():
 	timeSpent = []
 	for k in range(1,269):
@@ -36,4 +52,10 @@ btn.pack()
 img_tk = ImageTk.PhotoImage(img)
 label.config(image=img_tk)
 
+#Tkinter version
 root.mainloop()
+
+#Matplotlib version
+#fig = plt.figure()
+#a = anim.FuncAnimation(fig,printNextImage,frames=268,repeat=False,interval=1)
+#plt.show()
